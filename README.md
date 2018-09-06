@@ -12,7 +12,7 @@ Celcat calendar versions:
 ## Desinstallation
 `sudo ./uninstall.sh`
 
-##Configuration
+## Configuration
 Configuration au format json (/etc/celcat_ics_sync.conf.json)  
 l'url du calendrier peut contenir différents tags:  
 - `%type` sera remplacé par la valeur tags['type'] (dans la configuration)

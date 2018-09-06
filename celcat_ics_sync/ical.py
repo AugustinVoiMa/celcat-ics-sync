@@ -14,30 +14,60 @@ def eventstoical(eventlist, filename):
     return
 
 def icalbegin(file):
-    print("BEGIN:VCALENDAR", file=file, end="\r\n")
-    print("VERSION:2.0", file=file, end="\r\n")
-    print("PRODID:-//Augustin-VM//celcat-to-ics", file=file, end="\r\n")
+    safeprint(file, "BEGIN:VCALENDAR")
+    safeprint(file, "VERSION:2.0")
+    safeprint(file, "PRODID:-//Augustin-VM//celcat-to-ics")
     return
 
 
 def icalend(file):
-    print("END:VCALENDAR", file=file, end="\r\n")
+    safeprint(file, "END:VCALENDAR")
     return
 
 def icaladdevent(file, ev):
     start = (time.strptime(ev.get("start"), isodatef)) # ISO date format
     end = (time.strptime(ev.get("end"), isodatef)) # ISO date format
-    print("BEGIN:VEVENT", file=file, end="\r\n")
-    print("UID:"+ev.get("id") , file=file, end="\r\n")
-    print("DTSTAMP:"+datetime.date.fromtimestamp(time.time()).strftime(icsdatef), file=file, end="\r\n")
-    print("DTSTART:"+ time.strftime(icsdatef, start), file=file, end="\r\n")
-    print("DTEND:"+time.strftime(icsdatef, end), file=file, end="\r\n")
+    safeprint(file, "BEGIN:VEVENT")
+    safeprint(file, "UID:"+ev.get("id"))
+    safeprint(file, "DTSTAMP:"+datetime.date.fromtimestamp(time.time()).strftime(icsdatef))
+    safeprint(file, "DTSTART:"+ time.strftime(icsdatef, start))
+    safeprint(file, "DTEND:"+time.strftime(icsdatef, end))
     icaladdsummary(file,ev)
-    print("END:VEVENT", file=file, end="\r\n")
+    safeprint(file, "END:VEVENT")
     return
 
 def icaladdsummary(file, ev):
-    txt = "SUMMARY:"+ev.get("text")
+    text=ev.get("text").split("<br>")
+    time_summ = text[0]
+    category = text[1]
+    title = text[2]
+    detail = text[3].replace(";","\\n")
+    loc = len(text) > 4 and text[4] or "maybe on the moon...";
+
+    #DESCRIPTION
+    txt = "DESCRIPTION:"\
+        +time_summ+"\\n"\
+        +category+"\\n"\
+        +loc+"\\n\\n"\
+        +detail
+    safeprint(file, txt)
+
+    #LOCATION
+    txt = "LOCATION:"\
+        +loc
+    safeprint(file,txt)
+
+    #CATEGORY
+    txt = "CATEGORY:"\
+        +category
+    safeprint(file, txt)
+
+    #SUMMARY
+    txt = "SUMMARY:"\
+        +title
+    safeprint(file, txt)
+
+def safeprint(file, txt):
     for i in range(75,len(txt), 75):
         txt=txt[:i]+"\r\n\t"+txt[i:]
     print(txt, file=file, end="\r\n")
