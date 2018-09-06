@@ -25,6 +25,5 @@ def displayEvent(ev):
 if __name__ == "__main__":
     jseventlist = fetch.getjseventlist("https://edt.univ-tlse3.fr/calendar/default.aspx?View=month&Type=group&ResourceName=formation_EMINAE_s1")
     events = json.loads(jseventlist)
-    #displayEvent(events[0])
-    print(events[0])
+    #displayEvent(events[0])    
     ical.eventstoical(events, "test.ics")
