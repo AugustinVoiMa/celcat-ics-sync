@@ -18,6 +18,16 @@
             "from": -1,
             "to": 2,
             "tags":{
+              "name": "m1-inf-iarf-tpA12",
+              "formation": "formation_EMINAE_s1_TPA12",
+              "type": "month"
+            }
+          },
+          {
+            "out": "/var/www/html/icalendar/%name.ics",
+            "from": -1,
+            "to": 2,
+            "tags":{
               "name": "m1-inf-dl",
               "formation": "formation_EMINLE_s1",
               "type": "month"
