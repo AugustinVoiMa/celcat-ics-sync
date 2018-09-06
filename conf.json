@@ -1,0 +1,29 @@
+{
+  "sites" :{
+      "UPS-FSI":{
+        "url": "https://edt.univ-tlse3.fr/calendar/default.aspx?View=%type&Type=group&ResourceName=%formation&Date=%date",
+        "calendars":[
+          {
+            "out": "/var/www/html/icalendar/%name.ics",
+            "from": -1,
+            "to": 2,
+            "tags":{
+              "name": "m1-inf-iarf",
+              "formation": "formation_EMINAE_s1",
+              "type": "month"
+            }
+          },
+          {
+            "out": "/var/www/html/icalendar/%name.ics",
+            "from": -1,
+            "to": 2,
+            "tags":{
+              "name": "m1-inf-dl",
+              "formation": "formation_EMINLE_s1",
+              "type": "month"
+            }
+          }
+        ]
+      }
+    }
+}
