@@ -7,7 +7,9 @@ Celcat calendar versions:
 
 
 ## Inctallation
-`sudo ./install.sh`
+`sudo ./install.sh`  
+Pour copier le fichier de configuration exemple:  
+`sudo cp conf.json /etc/celcat_ics_sync.conf.json`  
 
 ## Desinstallation
 `sudo ./uninstall.sh`

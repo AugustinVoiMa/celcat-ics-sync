@@ -1,11 +1,19 @@
 import datetime
 import time
+import os
 
-#See rfc 5545 https://tools.ietf.org/html/rfc5545
+#See rfc 5545 for ical/ics format https://tools.ietf.org/html/rfc5545
 icsdatef = "%Y%m%dT%H%M00"
 isodatef = "%Y-%m-%dT%H:%M:%S"
 
 def eventstoical(eventlist, filename):
+    # Check for dir
+    if not os.path.exists(os.path.dirname(filename)):
+        try:
+            os.makedirs(os.path.dirname(filename))
+        except OSError as exc:
+            if exc.errno != errno.EEXIST:
+                raise
     with open(filename, "w", encoding="utf-8") as file:
         icalbegin(file)
         for event in eventlist:
