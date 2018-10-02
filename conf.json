@@ -22,18 +22,19 @@
               "formation": "formation_EMINAE_s1_TPA12",
               "type": "month"
             }
-          },
-          {
-            "out": "/var/www/html/icalendar/m1/inf/%name.ics",
-            "from": -1,
-            "to": 2,
-            "tags":{
-              "name": "m1-inf-dl",
-              "formation": "formation_EMINLE_s1",
-              "type": "month"
-            }
           }
         ]
       }
-    }
+    },
+  "rules": {
+    "substitutions":{
+        "([Aa]lgo)[\\w]+" : "\\1",
+        "[Mm]odélisation\\s(et\\s)?conception\\sobjet": "MCO",
+        "[Mm]odélisation\\s(et\\s)?calcul\\sscientifique": "MCS",
+        "[Mm]odélisation\\s(et\\s)?conception\\s(du\\s)?parallélisme\\s(et\\s|de\\s|la\\s)*répartition": "MCPR",
+        "[Pp]rogrammation\\sobjet": "POO",
+        "[Tt]héorie\\s(des\\s)?langages\\s(et\\s)?compilation": "TLC",
+        "\\s(et|ou|de|du|des|la|en)\\s" : " "
+      }
+  }
 }
