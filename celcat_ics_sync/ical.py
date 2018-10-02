@@ -45,8 +45,6 @@ def icaladdevent(file, ev):
 
 def icaladdsummary(file, ev):
     text=ev.get("text").split("<br>")
-    if len(text) < 3:
-        return False
     time_summ = len(text) > 0 and text[0] or "at cookie time"
     category = len(text) > 1 and text[1] or "something"
     title = len(text) > 2 and text[2] or "[[cookieing]]"
@@ -75,8 +73,7 @@ def icaladdsummary(file, ev):
     #SUMMARY
     txt = "SUMMARY:"\
         +"-".join(title.split("-")[1:]) # remove module number (is in the desc)
-    safeprint(file, txt)
-    return True
+    safeprint(file, txt)    
 
 def safeprint(file, txt):
     for i in range(75,len(txt), 75):
