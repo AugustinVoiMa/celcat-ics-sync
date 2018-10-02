@@ -47,7 +47,7 @@ def icaladdsummary(file, ev):
     text=ev.get("text").split("<br>")
     time_summ = len(text) > 0 and text[0] or "at cookie time"
     category = len(text) > 1 and text[1] or "something"
-    title = len(text) > 2 and text[2] or "[[cookieing]]"
+    title = len(text) > 2 and text[2] or "- [[cookieing]]"
     detail = len(text) > 3 and text[3].replace(";","\\n") or "doing some cookies..."
     loc = len(text) > 4 and text[4] or "maybe on the moon...";
 
@@ -72,8 +72,8 @@ def icaladdsummary(file, ev):
 
     #SUMMARY
     txt = "SUMMARY:"\
-        +"-".join(title.split("-")[1:]) # remove module number (is in the desc)
-    safeprint(file, txt)    
+        +"- ".join(title.split("- ")[1:]) # remove module number (is in the desc)
+    safeprint(file, txt)
 
 def safeprint(file, txt):
     for i in range(75,len(txt), 75):
