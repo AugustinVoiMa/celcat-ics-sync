@@ -20,7 +20,7 @@ def displayEvent(ev):
     print(start)
     print(end)
 
-def importexport(fromurl, tofile="test.ics", type="month", diff_from=-1, diff_to=10):
+def importexport(fromurl, conf, tofile="test.ics", type="month", diff_from=-1, diff_to=10):
     events = []
     for diff_t in range(diff_from, diff_to):
         td = None
@@ -33,4 +33,4 @@ def importexport(fromurl, tofile="test.ics", type="month", diff_from=-1, diff_to
         calurl=fromurl.replace("%date", str_date)
         jseventlist = fetch.getjseventlist(calurl)
         events += json.loads(jseventlist)
-    ical.eventstoical(events, tofile)
+    ical.eventstoical(events, tofile, conf)

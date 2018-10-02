@@ -17,4 +17,4 @@ if __name__ == "__main__":
             for t in ["type", "formation"]:
                 calurl=calurl.replace("%"+t, tags[t])
             print("importing "+tags["name"])
-            fetcher.importexport(calurl, icsout, tags["type"], int(cal["from"]), int(cal["to"]))
+            fetcher.importexport(calurl, c, icsout, tags["type"], int(cal["from"]), int(cal["to"]))

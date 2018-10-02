@@ -2,11 +2,13 @@ import datetime
 import time
 import os
 
+from .rulesmanager import RulesManager
+
 #See rfc 5545 for ical/ics format https://tools.ietf.org/html/rfc5545
 icsdatef = "%Y%m%dT%H%M00"
 isodatef = "%Y-%m-%dT%H:%M:%S"
 
-def eventstoical(eventlist, filename):
+def eventstoical(eventlist, filename, conf):
     # Check for dir
     if not os.path.exists(os.path.dirname(filename)):
         try:
@@ -16,7 +18,7 @@ def eventstoical(eventlist, filename):
     with open(filename, "w", encoding="utf-8") as file:
         icalbegin(file)
         for event in eventlist:
-            icaladdevent(file, event)
+            icaladdevent(file, event, conf)
         icalend(file)
     return
 
@@ -31,7 +33,7 @@ def icalend(file):
     safeprint(file, "END:VCALENDAR")
     return
 
-def icaladdevent(file, ev):
+def icaladdevent(file, ev, conf):
     start = (time.strptime(ev.get("start"), isodatef)) # ISO date format
     end = (time.strptime(ev.get("end"), isodatef)) # ISO date format
     safeprint(file, "BEGIN:VEVENT")
@@ -39,11 +41,11 @@ def icaladdevent(file, ev):
     safeprint(file, "DTSTAMP:"+datetime.date.fromtimestamp(time.time()).strftime(icsdatef))
     safeprint(file, "DTSTART:"+ time.strftime(icsdatef, start))
     safeprint(file, "DTEND:"+time.strftime(icsdatef, end))
-    icaladdsummary(file,ev)
+    icaladdsummary(file,ev, conf)
     safeprint(file, "END:VEVENT")
     return
 
-def icaladdsummary(file, ev):
+def icaladdsummary(file, ev, conf):
     text=ev.get("text").split("<br>")
     time_summ = len(text) > 0 and text[0] or "at cookie time"
     category = len(text) > 1 and text[1] or "something"
@@ -71,8 +73,10 @@ def icaladdsummary(file, ev):
     safeprint(file, txt)
 
     #SUMMARY
+    light_title = "- ".join(title.split("- ")[1:]);
+    light_title = conf.rulesmanager.digest(light_title)
     txt = "SUMMARY:"\
-        +"- ".join(title.split("- ")[1:]) # remove module number (is in the desc)
+        + light_title# remove module number (is in the desc)
     safeprint(file, txt)
 
 def safeprint(file, txt):
